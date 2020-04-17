@@ -13,6 +13,8 @@ const port = process.env.PORT || 8080;
 //         id: "First date"
 //     }
 // ];
+//starting path will be in the public folder
+app.use(express.static("public"));
 
 app.use(express.urlencoded({extended: true }));
 app.use(express.json());
