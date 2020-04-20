@@ -29,14 +29,23 @@ app.get("/notes", function(req, res) {
 //   });
 
 app.post("/api/notes", function(req, res) {
-    db.push(req.body);
-    res.json(db);
-    //res.sendFile(path.join(__dirname, "view.html"));
-  });
+  //req.body={ title, text}
+  req.body.id=db.length;
+  //req.body={ title, text, id}
+  db.push(req.body);
+  fs.writeFileSync("./db/db.json", JSON.stringify(db));
+  res.json(db);  
+});
 
 app.get("/api/notes", function(req, res){
     //res.send("works");
     res.json(db);
+});
+
+app.delete("/api/notes/:id", function(req, res){
+  db.splice(req.params.id,1)
+  fs.writeFileSync("./db/db.json", JSON.stringify(db));
+  res.json(db);
 });
 
   app.get("*", function(req, res) {
